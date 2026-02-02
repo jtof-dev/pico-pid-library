@@ -4,6 +4,7 @@
 #
 #  Original library: https://github.com/br3ttb/Arduino-PID-Library
 #  Forked version for Pico: https://github.com/samyarsadat/Pico-PID-Library
+#  Re-Forked to remove hard-coded file structure: https://github.com/jtof-dev/pico-pid-library
 #
 #  This Library is licensed under the MIT License.
 
@@ -27,8 +28,15 @@ set(CMAKE_CXX_STANDARD 17)
 # Initialize the Pico SDK
 pico_sdk_init()
 
-# Add source subdirectory
-add_subdirectory(src)
+# Add the library
+add_library(pico-pid-library pid.cpp)
+
+# Include header files
+target_include_directories(pico-pid-library PUBLIC .)
+
+# Link to libraries
+target_link_libraries(pico-pid-library pico_stdlib)
+
 
 # CMake flags
 set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -ffunction-sections -fdata-sections")
